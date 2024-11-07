@@ -83,6 +83,11 @@ public class AuthController {
         return new ResponseEntity<>(iUserService.delete(idUser)?HttpStatus.OK:HttpStatus.NOT_FOUND);
     }
 
+    @PutMapping("/update/{userId}")
+    public ResponseEntity<UserDto> update(@PathVariable Integer userId,@RequestBody UserDto authorDto){
+        return ResponseEntity.of(iUserService.update(userId,authorDto));
+    }
+
     @GetMapping("/list")
     public ResponseEntity<List<UserDto>> findAll(){
         return ResponseEntity.ok(iUserService.findAll());

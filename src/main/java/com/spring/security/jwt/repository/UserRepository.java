@@ -46,4 +46,5 @@ public class UserRepository implements IUserRepository {
     public Optional<UserDto> findById(Integer id) {
         return iUserCrudRepository.findById(id).map(iUserMapper::toUserDto);
     }
+
 }

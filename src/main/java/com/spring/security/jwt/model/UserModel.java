@@ -1,6 +1,7 @@
 package com.spring.security.jwt.model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
