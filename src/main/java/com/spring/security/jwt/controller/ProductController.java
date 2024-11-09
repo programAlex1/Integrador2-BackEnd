@@ -1,28 +1,44 @@
 package com.spring.security.jwt.controller;
 
+import com.spring.security.jwt.dto.CustomerDto;
+import com.spring.security.jwt.dto.ProductDto;
+import com.spring.security.jwt.service.ICustomerService;
 import com.spring.security.jwt.service.IProductService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import com.spring.security.jwt.model.ProductModel;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-@Controller
-@CrossOrigin("*")
-@RequestMapping("api/v1")
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("api/v1/product")
 public class ProductController {
+    private final IProductService iProductService;
 
-    @Autowired
-    IProductService iProductService;
+    @PostMapping()
+    public ResponseEntity<ProductDto> save(@RequestBody ProductDto productDto){
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(iProductService.save(productDto));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .build();
+        }
+    }
 
-    @GetMapping("/list")
-    public ResponseEntity<?> list() {
-        List<ProductModel> products = this.iProductService.findAll();
-        return new ResponseEntity<>(products, HttpStatus.OK);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> delete(@PathVariable Long id){
+        return new ResponseEntity<>(iProductService.delete(id)?HttpStatus.OK:HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductDto> update(@PathVariable Long id,@RequestBody ProductDto productDto){
+        return ResponseEntity.of(iProductService.update(id,productDto));
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<ProductDto>> findAll(){
+        return ResponseEntity.ok(iProductService.findAll());
     }
 }

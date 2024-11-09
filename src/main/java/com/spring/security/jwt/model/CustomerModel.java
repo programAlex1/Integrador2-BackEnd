@@ -1,5 +1,6 @@
 package com.spring.security.jwt.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -23,6 +24,7 @@ public class CustomerModel {
     String address;
 
     @CreationTimestamp
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "creation_time", nullable = false, updatable = false)
     LocalDateTime creationTime;
 }

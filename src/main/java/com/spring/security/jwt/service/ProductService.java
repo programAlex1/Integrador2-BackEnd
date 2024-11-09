@@ -1,26 +1,46 @@
 package com.spring.security.jwt.service;
 
-import com.spring.security.jwt.model.ProductModel;
-import com.spring.security.jwt.repository.IProductResository;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import com.spring.security.jwt.dto.ProductDto;
+import com.spring.security.jwt.repository.IProductRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
-public class ProductService implements  IProductService{
-    @Autowired
-    private IProductResository iProductResository;
+public class ProductService implements IProductService{
+
+    private final IProductRepository iProductRepository;
 
     @Override
-    public List<ProductModel> findAll() {
-        List<ProductModel> list;
-        try{
-            list = iProductResository.findAll();
-        }catch (Exception ex){
-            throw ex;
+    public ProductDto save(ProductDto productDto) {
+        return iProductRepository.save(productDto);
+    }
+
+    @Override
+    public boolean delete(Long id) {
+        if(iProductRepository.findById(id).isEmpty()){
+            return false;
         }
-        return list;
+        iProductRepository.delete(id);
+        return true;
+    }
+
+    @Override
+    public List<ProductDto> findAll() {
+        return iProductRepository.findAll();
+    }
+
+    @Override
+    public Optional<ProductDto> update(Long id, ProductDto productDto) {
+        if(iProductRepository.findById(id).isEmpty()){
+            return Optional.empty();
+        }
+        productDto.setId(id);
+        return Optional.of(iProductRepository.save(productDto));
     }
 }
