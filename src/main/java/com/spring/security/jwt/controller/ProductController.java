@@ -37,6 +37,11 @@ public class ProductController {
         return ResponseEntity.of(iProductService.update(id,productDto));
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<ProductDto> updateStock(@PathVariable Long id,@RequestBody ProductDto productDto){
+        return ResponseEntity.of(iProductService.updateStock(id,productDto));
+    }
+
     @GetMapping("")
     public ResponseEntity<List<ProductDto>> findAll(){
         return ResponseEntity.ok(iProductService.findAll());

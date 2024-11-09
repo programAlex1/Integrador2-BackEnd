@@ -15,4 +15,6 @@ public interface IProductService {
     public List<ProductDto> findAll();
 
     Optional<ProductDto> update(Long id, ProductDto productDto);
+
+    Optional<ProductDto> updateStock(Long id, ProductDto productDto);
 }

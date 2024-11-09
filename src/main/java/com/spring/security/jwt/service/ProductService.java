@@ -43,4 +43,14 @@ public class ProductService implements IProductService{
         productDto.setId(id);
         return Optional.of(iProductRepository.save(productDto));
     }
+
+    @Override
+    public Optional<ProductDto> updateStock(Long id, ProductDto productDto) {
+        if(iProductRepository.findById(id).isEmpty()){
+            return Optional.empty();
+        }
+        ProductDto productDto1 = iProductRepository.findById(id).get();
+        productDto1.setStock(productDto.getStock() + productDto1.getStock());
+        return Optional.of(iProductRepository.save(productDto1));
+    }
 }
