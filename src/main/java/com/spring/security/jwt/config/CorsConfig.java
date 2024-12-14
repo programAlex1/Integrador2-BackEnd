@@ -15,7 +15,7 @@ public class CorsConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true);
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "https://ng-menu-dashboard.onrender.com"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "https://ng-menu-dashboard.onrender.com", "https://integrador2-front-end.vercel.app"));
         configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "DELETE","PATCH"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
